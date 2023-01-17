@@ -11,3 +11,8 @@ type AlgoritmoEnAmplitud struct {
 func (e AlgoritmoEnAmplitud) Mezclar(viejos *[][]int, nuevos *[][]int) {
 	*viejos = append(*viejos, *nuevos...)
 }
+
+// constructor del struct
+func newAmplitud() AlgoritmoEnAmplitud {
+	return AlgoritmoEnAmplitud{}
+}
