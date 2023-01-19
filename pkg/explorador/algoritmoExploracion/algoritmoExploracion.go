@@ -10,3 +10,15 @@ import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 type AlgoritmoExploracion interface {
 	Mezclar(viejos *[]camino.Camino, nuevos *[]camino.Camino)
 }
+
+// Estos son los diferentes tipos de algoritmo que hay:
+type TipoAlgoritmoExp int
+
+const (
+	AlBranchAndBonud = iota
+	AlAEstrella
+	AlEscalada
+	AlPrimeroElMejor
+	AlProfundidad
+	AlAmplitud
+)

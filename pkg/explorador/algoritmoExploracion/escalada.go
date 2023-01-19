@@ -16,10 +16,15 @@ type Escalada struct {
 // Constructor del algoritmo de exploración "Escalada".
 // heuristico es el heuristico de estado mediante el cual el algoritmo evalua los estados para tomar decisiones de expansión.
 // alOrdenacion es el algoritmo de ordenacion mediante el cual "escalada" ordena los caminos una vez son evaluados con el heuristico
-func NewEscalada(heuristico heuristico.HeuristicoEstado, alOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion) Escalada {
+func NewEscalada(
+	alOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion,
+	grafo [][]float64,
+	heuristico heuristico.HeuristicoEstado,
+) Escalada {
 	return Escalada{
 		heuristico:   heuristico,
 		alOrdenacion: alOrdenacion,
+		grafo:        grafo,
 	}
 }
 

@@ -6,19 +6,17 @@ import (
 )
 
 type MergeSort struct {
-	//Heuristico mediante el cual se oredaran los caminos
-	heuristico heuristico.HeuristicoCamino
 }
 
 // Devuelve un objeto del algoritmo de ordenacion "Merge Sort"
 // heuristico es el heuristico con el que comprará los caminos para ordenarlos entre si
-func newMergeSort(heuristico heuristico.HeuristicoCamino) MergeSort {
-	return MergeSort{heuristico: heuristico}
+func NewMergeSort() MergeSort {
+	return MergeSort{}
 }
 
 // Ordena los caminos dado el heuristico pasado en el constructor
-func (m MergeSort) Ordenar(caminos *[]camino.Camino) {
-	m.mergeSortAux(caminos, 0, len(*caminos)-1)
+func (m MergeSort) Ordenar(caminos *[]camino.Camino, heuristico heuristico.HeuristicoCamino) {
+	m.mergeSortAux(caminos, 0, len(*caminos)-1, heuristico)
 }
 
 // Dado un vector de caminos que incluye dos subvectores ordenados por el heuristico indicado,
@@ -33,12 +31,12 @@ func (m MergeSort) Ordenar(caminos *[]camino.Camino) {
 // La función merge(&vector, indexDe(-2),indexDe(19), indexDe(7))
 // ordena el vector de esta forma:
 // [...,-5,-2,-1,0,1,4,4,7,19,...]
-func (m MergeSort) merge(vectorPointer *[]camino.Camino, i0 int, k int, iN int) {
+func (m MergeSort) merge(vectorPointer *[]camino.Camino, i0 int, k int, iN int, heuristico heuristico.HeuristicoCamino) {
 	i, d, f := i0, k+1, 0
 	aux := make([]camino.Camino, iN-i0+1)
 	vector := *vectorPointer
 	for i <= k && d <= iN {
-		if m.heuristico.Heuristico(vector[i]) <= m.heuristico.Heuristico(vector[d]) {
+		if heuristico.Heuristico(vector[i]) <= heuristico.Heuristico(vector[d]) {
 			aux[f] = vector[i]
 			i++
 		} else {
@@ -64,11 +62,11 @@ func (m MergeSort) merge(vectorPointer *[]camino.Camino, i0 int, k int, iN int) 
 // Siempre y cuando i0 e iN no sean la misma posición, busca una posición intermedia y utiliza recursividad para ordenar ambos lados de la partición.
 // Una vez ordenadas ambas partes, utliiza el método merge para ordenar el vector desde i0 a iN partiendo de los dos subVectores ordenados.
 // Si i0 e iN son iguales, nos encontramos en el caso base, por lo que no altera el vector y lo deja como estaba.
-func (m MergeSort) mergeSortAux(vector *[]camino.Camino, i0 int, iN int) {
+func (m MergeSort) mergeSortAux(vector *[]camino.Camino, i0 int, iN int, heuristico heuristico.HeuristicoCamino) {
 	if i0 < iN {
 		k := (i0 + iN) / 2
-		m.mergeSortAux(vector, i0, k)
-		m.mergeSortAux(vector, k+1, iN)
-		m.merge(vector, i0, k, iN)
+		m.mergeSortAux(vector, i0, k, heuristico)
+		m.mergeSortAux(vector, k+1, iN, heuristico)
+		m.merge(vector, i0, k, iN, heuristico)
 	}
 }

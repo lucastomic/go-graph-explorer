@@ -9,12 +9,17 @@ import (
 // El algoritmo A* es un algoritmo que se basa en la estimación del coste total que tiene el camino.
 // Esta estimación es conseguida mediante la suma del coste del camino ya conocido, y la estimacion de lo que queda
 // hasta le meta (mediante el heuristico)
-func newAEstrella(algoritmoOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion, grafo [][]float64) BusquedaOptimo {
+func NewAEstrella(
+	algoritmoOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion,
+	grafo [][]float64,
+	heuristico heuristico.HeuristicoEstado,
+) BusquedaOptimo {
 	return BusquedaOptimo{
 		algoritmoOrdenacion: algoritmoOrdenacion,
 		grafo:               grafo,
 		heuristico: heuristicoAEstrella{
-			grafo: grafo,
+			grafo:                grafo,
+			heuristicoEstimacion: heuristico,
 		},
 	}
 }

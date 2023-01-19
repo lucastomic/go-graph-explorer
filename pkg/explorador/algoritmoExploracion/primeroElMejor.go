@@ -14,10 +14,15 @@ type PrimeroElMejor struct {
 }
 
 // Constructor de la clase
-func NewPrimeroElMejor(heuristico heuristico.HeuristicoEstado, alOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion) PrimeroElMejor {
+func NewPrimeroElMejor(
+	alOrdenacion algoritmoOrdenacion.AlgoritmoOrdenacion,
+	grafo [][]float64,
+	heuristico heuristico.HeuristicoEstado,
+) PrimeroElMejor {
 	return PrimeroElMejor{
 		heuristico:   heuristico,
 		alOrdenacion: alOrdenacion,
+		grafo:        grafo,
 	}
 }
 
