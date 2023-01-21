@@ -1,14 +1,15 @@
-package explorador
+package explorer
 
 import (
 	"errors"
 
 	"github.com/lucastomic/ExploracionDeEspacios/internals/sliceUtils"
-	algoritmoexploracion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmoExploracion"
-	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/solucion"
+
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
 )
 
 // explorer is a structure in charge of exploring a graph.
@@ -17,17 +18,17 @@ import (
 // The scan algorithm is defined by an object that implements the scanAlgorithm interface, which
 // defines how the pending paths to be explored will be ordered once the current state is extended.
 // The solution state is measured with the isSolution() method of the Solution structure
-type explorador struct {
+type explorer struct {
 	graph     [][]float64
-	algorithm algoritmoexploracion.ExplorationAlgorithm
-	solution  solucion.Solucion
+	algorithm explorationAlgorithm.ExplorationAlgorithm
+	solution  solution.Solution
 }
 
 // Indicates whether the explorer should keep looking for an optimal path.
 // This will be so as long as there are still pending paths to search for and
 // no solution found yet
-func (e explorador) keepSearching(pendingPaths []path.Path, currentPath path.Path) bool {
-	return !sliceUtils.IsEmpty(pendingPaths) && !e.solution.EsSolucion(currentPath.GetCurrentState(), e.graph)
+func (e explorer) keepSearching(pendingPaths []path.Path, currentPath path.Path) bool {
+	return !sliceUtils.IsEmpty(pendingPaths) && !e.solution.IsSolution(currentPath.GetCurrentState(), e.graph)
 }
 
 // Explore the graph obtaining the searched path.
@@ -37,7 +38,7 @@ func (e explorador) keepSearching(pendingPaths []path.Path, currentPath path.Pat
 // Iterate until the method [e.seguirBuscando()] returns false
 // If all the iterations are finished and the current state is not the solution, return an error indicating that the problem has no solution.
 // Otherwise, return the current state.
-func (e explorador) Explore() (path.Path, error) {
+func (e explorer) Explore() (path.Path, error) {
 	var pendingPaths []path.Path
 	pendingPaths[0] = path.NewEmptyPath()
 	currentPath := pendingPaths[len(pendingPaths)-1]
@@ -50,7 +51,7 @@ func (e explorador) Explore() (path.Path, error) {
 		currentPath = pendingPaths[len(pendingPaths)-1]
 	}
 
-	if !e.solution.EsSolucion(currentPath.GetCurrentState(), e.graph) {
+	if !e.solution.IsSolution(currentPath.GetCurrentState(), e.graph) {
 		return path.NewEmptyPath(), errors.New("there is no solution")
 	} else {
 		return currentPath, nil
@@ -67,20 +68,20 @@ func (e explorador) Explore() (path.Path, error) {
 // algoritmoexploracion.AlAmplitude (Amplitude)
 func ExploreWithUninformed(
 	graph [][]float64,
-	solution solucion.Solucion,
-	algorithmType algoritmoexploracion.ExpAlgorithmType,
+	solution solution.Solution,
+	algorithmType explorationAlgorithm.ExpAlgorithmType,
 ) (path.Path, error) {
 
-	var algorithm algoritmoexploracion.ExplorationAlgorithm
+	var algorithm explorationAlgorithm.ExplorationAlgorithm
 	switch algorithmType {
-	case algoritmoexploracion.AlBranchAndBonud:
-		algorithm = algoritmoexploracion.NewBranchAndBound(algoritmoOrdenacion.NewMergeSort(), graph)
-	case algoritmoexploracion.AlDepthFirst:
-		algorithm = algoritmoexploracion.NewProfundidad()
-	case algoritmoexploracion.AlAmplitude:
-		algorithm = algoritmoexploracion.NewAmplitude()
+	case explorationAlgorithm.AlBranchAndBonud:
+		algorithm = explorationAlgorithm.NewBranchAndBound(sortAlgorithm.NewMergeSort(), graph)
+	case explorationAlgorithm.AlDepthFirst:
+		algorithm = explorationAlgorithm.NewProfundidad()
+	case explorationAlgorithm.AlAmplitude:
+		algorithm = explorationAlgorithm.NewAmplitude()
 	}
-	explorer := explorador{
+	explorer := explorer{
 		graph:     graph,
 		solution:  solution,
 		algorithm: algorithm,
@@ -100,21 +101,21 @@ func ExploreWithUninformed(
 //	algoritmoexploracion.AlBestFirst (Best First)
 func ExploreWithInformed(
 	graph [][]float64,
-	solution solucion.Solucion,
-	heuristic heuristico.StateHeuristic,
-	algorithmType algoritmoexploracion.ExpAlgorithmType,
+	solution solution.Solution,
+	heuristic heuristic.StateHeuristic,
+	algorithmType explorationAlgorithm.ExpAlgorithmType,
 ) (path.Path, error) {
 
-	var algorithm algoritmoexploracion.ExplorationAlgorithm
+	var algorithm explorationAlgorithm.ExplorationAlgorithm
 	switch algorithmType {
-	case algoritmoexploracion.AlAStar:
-		algorithm = algoritmoexploracion.NewAEstrella(algoritmoOrdenacion.NewMergeSort(), graph, heuristic)
-	case algoritmoexploracion.AlClimbing:
-		algorithm = algoritmoexploracion.NewEscalada(algoritmoOrdenacion.NewMergeSort(), graph, heuristic)
-	case algoritmoexploracion.AlBestFirst:
-		algorithm = algoritmoexploracion.NewPrimeroElMejor(algoritmoOrdenacion.NewMergeSort(), graph, heuristic)
+	case explorationAlgorithm.AlAStar:
+		algorithm = explorationAlgorithm.NewAEstrella(sortAlgorithm.NewMergeSort(), graph, heuristic)
+	case explorationAlgorithm.AlClimbing:
+		algorithm = explorationAlgorithm.NewEscalada(sortAlgorithm.NewMergeSort(), graph, heuristic)
+	case explorationAlgorithm.AlBestFirst:
+		algorithm = explorationAlgorithm.NewPrimeroElMejor(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	}
-	explorer := explorador{
+	explorer := explorer{
 		graph:     graph,
 		solution:  solution,
 		algorithm: algorithm,

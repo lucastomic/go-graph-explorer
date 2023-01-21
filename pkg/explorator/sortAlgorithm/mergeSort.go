@@ -1,8 +1,8 @@
-package algoritmoOrdenacion
+package sortAlgorithm
 
 import (
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 )
 
 type MergeSort struct {
@@ -14,9 +14,9 @@ func NewMergeSort() MergeSort {
 	return MergeSort{}
 }
 
-// Sort the paths given the heuristic passed into the constructor
-func (m MergeSort) Sort(caminos *[]path.Path, heuristico heuristico.PathHeuristic) {
-	m.mergeSortAux(caminos, 0, len(*caminos)-1, heuristico)
+// Sort the paths given with the heuristic passed by argument
+func (m MergeSort) Sort(caminos *[]path.Path, heuristic heuristic.PathHeuristic) {
+	m.mergeSortAux(caminos, 0, len(*caminos)-1, heuristic)
 }
 
 // Given a vector of paths that includes two subvectors ordered by the indicated heuristic,
@@ -31,7 +31,7 @@ func (m MergeSort) Sort(caminos *[]path.Path, heuristico heuristico.PathHeuristi
 // The function merge(&vector, indexDe(-2),indexDe(19), indexDe(7))
 // sort the array like this:
 // [...,-5,-2,-1,0,1,4,4,7,19,...]
-func (m MergeSort) merge(vectorPointer *[]path.Path, i0 int, k int, iN int, heuristic heuristico.PathHeuristic) {
+func (m MergeSort) merge(vectorPointer *[]path.Path, i0 int, k int, iN int, heuristic heuristic.PathHeuristic) {
 	i, d, f := i0, k+1, 0
 	aux := make([]path.Path, iN-i0+1)
 	vector := *vectorPointer
@@ -62,7 +62,7 @@ func (m MergeSort) merge(vectorPointer *[]path.Path, i0 int, k int, iN int, heur
 // As long as i0 and iN are not the same position, look for an intermediate position and use recursion to sort both sides of the partition.
 // Once both parts are sorted, use the merge method to sort the vector from i0 to iN starting from the two sorted subVectors.
 // If i0 and iN are equal, we are in the base case, so it does not alter the vector and leaves it as it was.
-func (m MergeSort) mergeSortAux(vector *[]path.Path, i0 int, iN int, heuristic heuristico.PathHeuristic) {
+func (m MergeSort) mergeSortAux(vector *[]path.Path, i0 int, iN int, heuristic heuristic.PathHeuristic) {
 	if i0 < iN {
 		k := (i0 + iN) / 2
 		m.mergeSortAux(vector, i0, k, heuristic)

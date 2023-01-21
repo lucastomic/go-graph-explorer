@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 )
 
 // Differents paths

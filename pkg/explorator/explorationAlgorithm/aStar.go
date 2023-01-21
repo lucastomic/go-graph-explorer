@@ -1,9 +1,9 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
 import (
-	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
 )
 
 //TODO: IMPLEMENTAR FACTOR ALPHA
@@ -12,9 +12,9 @@ import (
 // This estimate is obtained by adding the cost of the path already known, and the estimate of what remains
 // up to the goal (using the heuristic)
 func NewAEstrella(
-	sortAlgorithm algoritmoOrdenacion.SortAlgorithm,
+	sortAlgorithm sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
-	heuristic heuristico.StateHeuristic,
+	heuristic heuristic.StateHeuristic,
 ) OptimalSerch {
 	return OptimalSerch{
 		sortAlgorithm: sortAlgorithm,
@@ -28,7 +28,7 @@ func NewAEstrella(
 
 type AStarHeuristic struct {
 	// estimation Heuristic is the heuristic that estimates how long it will take to get from a state to the solution
-	estimationHeuristic heuristico.StateHeuristic
+	estimationHeuristic heuristic.StateHeuristic
 	graph               [][]float64
 }
 

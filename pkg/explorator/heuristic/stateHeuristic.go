@@ -1,4 +1,4 @@
-package heuristico
+package heuristic
 
 // Heuristic state evaluates the states and returns a verifiable value of how promising they are
 // in order to reach the solution

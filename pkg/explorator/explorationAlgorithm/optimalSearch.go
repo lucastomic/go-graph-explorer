@@ -1,16 +1,16 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
 import (
-	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/prune"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/prune"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
 )
 
 // They are algorithms that guarantee to obtain the optimal path
 type OptimalSerch struct {
-	sortAlgorithm algoritmoOrdenacion.SortAlgorithm
-	heuristic     heuristico.PathHeuristic
+	sortAlgorithm sortAlgorithm.SortAlgorithm
+	heuristic     heuristic.PathHeuristic
 	graph         [][]float64
 }
 

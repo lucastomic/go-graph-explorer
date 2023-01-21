@@ -1,6 +1,6 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 
 // Explore a graph in breadth.
 // Alogirthm not reported.

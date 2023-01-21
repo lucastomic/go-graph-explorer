@@ -1,8 +1,8 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
 import (
-	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
 )
 
 // Heuristic used in the Branch&Bound algorithm
@@ -25,7 +25,7 @@ func (b branchAndBoundHHeuristic) Heuristic(path path.Path) float64 {
 // precisely the one with the lowest cost
 // Constructor of the class. Returns an optimal search algorithm, passing the cost of the path as the heuristic.
 func NewBranchAndBound(
-	sortAlgorithm algoritmoOrdenacion.SortAlgorithm,
+	sortAlgorithm sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
 ) OptimalSerch {
 	return OptimalSerch{

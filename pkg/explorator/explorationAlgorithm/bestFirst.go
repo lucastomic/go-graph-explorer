@@ -1,23 +1,23 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
 import (
-	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
 )
 
 // Explration algorithm "Best First"
 type BestFirst struct {
-	heuristic heuristico.StateHeuristic
-	sortAlg   algoritmoOrdenacion.SortAlgorithm
+	heuristic heuristic.StateHeuristic
+	sortAlg   sortAlgorithm.SortAlgorithm
 	graph     [][]float64
 }
 
 // Struct constructor
 func NewPrimeroElMejor(
-	sortAlg algoritmoOrdenacion.SortAlgorithm,
+	sortAlg sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
-	heuristic heuristico.StateHeuristic,
+	heuristic heuristic.StateHeuristic,
 ) BestFirst {
 	return BestFirst{
 		heuristic: heuristic,
@@ -30,6 +30,6 @@ func NewPrimeroElMejor(
 // and then sort according to the heuristic and sort method
 func (p BestFirst) Merge(olds *[]path.Path, news *[]path.Path) {
 	*olds = append(*olds, *news...)
-	pathHeuristic := heuristico.NewPathHeurFromStateHeur(p.heuristic, p.graph)
+	pathHeuristic := heuristic.NewPathHeurFromStateHeur(p.heuristic, p.graph)
 	p.sortAlg.Sort(olds, pathHeuristic)
 }

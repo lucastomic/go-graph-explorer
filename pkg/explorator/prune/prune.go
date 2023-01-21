@@ -1,6 +1,6 @@
 package prune
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 
 // Whenever two partial paths lead to the same state, the most expensive of them is removed. Since
 // whatever state can be reached with the most expensive can also be reached with the other

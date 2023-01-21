@@ -1,6 +1,6 @@
-package heuristico
+package heuristic
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 
 // Heuristic path evaluates a path and returns a comparable value of how good it is
 type PathHeuristic interface {

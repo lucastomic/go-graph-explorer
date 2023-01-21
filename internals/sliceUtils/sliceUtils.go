@@ -1,7 +1,7 @@
 package sliceUtils
 
 // Eliminar último elemento del slice
-func EliminarUltimo[T any](sPointer *[]T) {
+func RemoveLast[T any](sPointer *[]T) {
 	slice := *sPointer
 	slice = slice[:len(slice)-1]
 }

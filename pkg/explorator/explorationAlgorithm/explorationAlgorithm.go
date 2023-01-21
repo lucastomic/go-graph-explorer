@@ -1,6 +1,6 @@
-package algoritmoexploracion
+package explorationAlgorithm
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 
 // Interface that covers the various system-dependent aspects of an exploration problem.
 // This is defined by:
@@ -8,7 +8,7 @@ import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 // How to define when a state is solution
 
 type ExplorationAlgorithm interface {
-	Merge(viejos *[]path.Path, nuevos *[]path.Path)
+	Merge(*[]path.Path, *[]path.Path)
 }
 
 // These are the different types of algorithm that there are:
