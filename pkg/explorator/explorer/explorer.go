@@ -3,13 +3,12 @@ package explorer
 import (
 	"errors"
 
-	"github.com/lucastomic/ExploracionDeEspacios/internals/sliceUtils"
-
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/utils/sliceUtils"
 )
 
 // explorer is a structure in charge of exploring a graph.
@@ -19,9 +18,10 @@ import (
 // defines how the pending paths to be explored will be ordered once the current state is extended.
 // The solution state is measured with the isSolution() method of the Solution structure
 type explorer struct {
-	graph     [][]float64
-	algorithm explorationAlgorithm.ExplorationAlgorithm
-	solution  solution.Solution
+	graph      [][]float64
+	algorithm  explorationAlgorithm.ExplorationAlgorithm
+	solution   solution.Solution
+	startState int
 }
 
 // Indicates whether the explorer should keep looking for an optimal path.
@@ -40,7 +40,7 @@ func (e explorer) keepSearching(pendingPaths []path.Path, currentPath path.Path)
 // Otherwise, return the current state.
 func (e explorer) Explore() (path.Path, error) {
 	var pendingPaths []path.Path
-	pendingPaths[0] = path.NewEmptyPath()
+	pendingPaths[0] = path.NewPath(&[]int{e.startState})
 	currentPath := pendingPaths[len(pendingPaths)-1]
 
 	for e.keepSearching(pendingPaths, currentPath) {
@@ -69,6 +69,7 @@ func (e explorer) Explore() (path.Path, error) {
 func ExploreWithUninformed(
 	graph [][]float64,
 	solution solution.Solution,
+	startState int,
 	algorithmType explorationAlgorithm.ExpAlgorithmType,
 ) (path.Path, error) {
 
@@ -82,9 +83,10 @@ func ExploreWithUninformed(
 		algorithm = explorationAlgorithm.NewAmplitude()
 	}
 	explorer := explorer{
-		graph:     graph,
-		solution:  solution,
-		algorithm: algorithm,
+		graph:      graph,
+		solution:   solution,
+		algorithm:  algorithm,
+		startState: startState,
 	}
 	return explorer.Explore()
 }
@@ -103,22 +105,24 @@ func ExploreWithInformed(
 	graph [][]float64,
 	solution solution.Solution,
 	heuristic heuristic.StateHeuristic,
+	startState int,
 	algorithmType explorationAlgorithm.ExpAlgorithmType,
 ) (path.Path, error) {
 
 	var algorithm explorationAlgorithm.ExplorationAlgorithm
 	switch algorithmType {
 	case explorationAlgorithm.AlAStar:
-		algorithm = explorationAlgorithm.NewAEstrella(sortAlgorithm.NewMergeSort(), graph, heuristic)
+		algorithm = explorationAlgorithm.NewAStar(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	case explorationAlgorithm.AlClimbing:
 		algorithm = explorationAlgorithm.NewEscalada(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	case explorationAlgorithm.AlBestFirst:
 		algorithm = explorationAlgorithm.NewPrimeroElMejor(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	}
 	explorer := explorer{
-		graph:     graph,
-		solution:  solution,
-		algorithm: algorithm,
+		graph:      graph,
+		solution:   solution,
+		algorithm:  algorithm,
+		startState: startState,
 	}
 	return explorer.Explore()
 }

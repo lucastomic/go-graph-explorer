@@ -11,7 +11,7 @@ import (
 // Algorithm A* is an algorithm that is based on the estimation of the total cost of the path.
 // This estimate is obtained by adding the cost of the path already known, and the estimate of what remains
 // up to the goal (using the heuristic)
-func NewAEstrella(
+func NewAStar(
 	sortAlgorithm sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
 	heuristic heuristic.StateHeuristic,

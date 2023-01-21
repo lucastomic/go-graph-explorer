@@ -1,9 +1,10 @@
 package path
 
 import (
-	"math"
+	"reflect"
 
-	"github.com/lucastomic/ExploracionDeEspacios/internals/sliceUtils"
+	floatutils "github.com/lucastomic/ExploracionDeEspacios/pkg/utils/floatUtils"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/utils/sliceUtils"
 )
 
 // A path is an acyclic succession of states. These states are represented
@@ -85,20 +86,31 @@ func (p Path) Expand(graph [][]float64) *[]Path {
 	// For each state adjacent to the current one (the last one in the list) that is not in the path,
 	// add a path to the response with path+state adjacent
 	for i := range adjacentOfCurrentState {
-		if p.notInfinit(adjacentOfCurrentState[i]) && !sliceUtils.Contains(*p.states, i) {
+		if floatutils.NotInfinit(adjacentOfCurrentState[i]) && !sliceUtils.Contains(*p.states, i) {
 			res = append(res, p.getPathWithNewState(i))
 		}
 	}
 	return &res
 }
 
-// If [val] is different from infinity (This in the graph means that they are connected)
-func (c Path) notInfinit(val float64) bool {
-	return val != math.MaxFloat64
-}
-
 // Return the last state of the path (the current state)
 func (c Path) GetCurrentState() int {
 	states := *c.states
 	return states[len(states)-1]
+}
+
+// ComparePathsSlices check whether two paths slices have the sames paths.
+// This means that every path have the same states
+func ComparePathsSlices(pathA, pathB []Path) bool {
+	if len(pathA) != len(pathB) {
+		return false
+	}
+	for i := range pathA {
+		aStates := pathA[i].states
+		bStates := pathB[i].states
+		if !reflect.DeepEqual(*aStates, *bStates) {
+			return false
+		}
+	}
+	return true
 }

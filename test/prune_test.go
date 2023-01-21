@@ -1,12 +1,12 @@
-package prune
+package test
 
 import (
 	"fmt"
-	"math"
 	"reflect"
 	"testing"
 
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/prune"
 )
 
 // Differents paths
@@ -15,17 +15,6 @@ var path2 path.Path = path.NewPath(&[]int{0, 1, 3})
 var path3 path.Path = path.NewPath(&[]int{0, 2})
 var path4 path.Path = path.NewPath(&[]int{0, 5})
 var path5 path.Path = path.NewPath(&[]int{0, 5})
-
-// Graph used
-var maxF float64 = math.MaxFloat64
-var graph [][]float64 = [][]float64{
-	{maxF, 0.5, 0.5, maxF, maxF, 0.5},
-	{0.5, maxF, maxF, 2.5, 5, maxF},
-	{0.5, maxF, maxF, maxF, maxF, maxF},
-	{maxF, 2.5, maxF, maxF, 2, maxF},
-	{maxF, 5, maxF, 2, maxF, maxF},
-	{0.5, maxF, maxF, maxF, maxF, maxF},
-}
 
 // Differents sets of tests.
 var pruneTests = []struct {
@@ -50,7 +39,7 @@ func TestPodar(t *testing.T) {
 	for i, tt := range pruneTests {
 		testName := fmt.Sprintf("Prune test number %v", i)
 		t.Run(testName, func(t *testing.T) {
-			Prune(&tt.paths, graph)
+			prune.Prune(&tt.paths, testGraph)
 			if !reflect.DeepEqual(tt.paths, tt.expected) {
 				t.Errorf("Expected: %v, got: %v", tt.expected, tt.paths)
 			}
