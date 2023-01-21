@@ -6,8 +6,8 @@ import (
 	"github.com/lucastomic/ExploracionDeEspacios/internals/sliceUtils"
 	algoritmoexploracion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmoExploracion"
 	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/solucion"
 )
 
@@ -26,7 +26,7 @@ type explorador struct {
 // Indica si el explorador debe seguir buscando un camino optimo.
 // Esto será asi siempre y cuando todavía queden caminos pendientes por los que buscar y
 // no se haya encontrado aun la solucion
-func (e explorador) seguirBuscando(caminosPendientes []camino.Camino, caminoActual camino.Camino) bool {
+func (e explorador) seguirBuscando(caminosPendientes []path.Path, caminoActual path.Path) bool {
 	return !sliceUtils.IsEmpty(caminosPendientes) && !e.solucion.EsSolucion(caminoActual.GetCurrentState(), e.grafo)
 }
 
@@ -37,21 +37,21 @@ func (e explorador) seguirBuscando(caminosPendientes []camino.Camino, caminoActu
 // Itera hasta que el método [e.seguirBuscando()] devuelve false
 // Si se terminaron todas las iteraciones y el estado actual no es la solucion, devuelve un error indicando que le problema no tiene solucion.
 // En caso contrario, devuelve el estado actual.
-func (e explorador) Explorar() (camino.Camino, error) {
-	var caminosPendientes []camino.Camino
-	caminosPendientes[0] = camino.NewEmptyPath()
+func (e explorador) Explorar() (path.Path, error) {
+	var caminosPendientes []path.Path
+	caminosPendientes[0] = path.NewEmptyPath()
 	caminoActual := caminosPendientes[len(caminosPendientes)-1]
 
 	for e.seguirBuscando(caminosPendientes, caminoActual) {
-		caminosNuevos := caminoActual.Expandir(e.grafo)
-		sliceUtils.EliminarUltimo(&caminosNuevos)
+		caminosNuevos := caminoActual.Expand(e.grafo)
+		sliceUtils.EliminarUltimo(caminosNuevos)
 
-		e.algoritmo.Mezclar(&caminosPendientes, &caminosNuevos)
+		e.algoritmo.Mezclar(&caminosPendientes, caminosNuevos)
 		caminoActual = caminosPendientes[len(caminosPendientes)-1]
 	}
 
 	if !e.solucion.EsSolucion(caminoActual.GetCurrentState(), e.grafo) {
-		return camino.NewEmptyPath(), errors.New("no existe solucion")
+		return path.NewEmptyPath(), errors.New("no existe solucion")
 	} else {
 		return caminoActual, nil
 	}
@@ -69,7 +69,7 @@ func ExplorarNoInformado(
 	grafo [][]float64,
 	solucion solucion.Solucion,
 	tipoAlgoritmo algoritmoexploracion.TipoAlgoritmoExp,
-) (camino.Camino, error) {
+) (path.Path, error) {
 
 	var algoritmo algoritmoexploracion.AlgoritmoExploracion
 	switch tipoAlgoritmo {
@@ -103,7 +103,7 @@ func ExplorarInformado(
 	solucion solucion.Solucion,
 	heuristico heuristico.HeuristicoEstado,
 	tipoAlgoritmo algoritmoexploracion.TipoAlgoritmoExp,
-) (camino.Camino, error) {
+) (path.Path, error) {
 
 	var algoritmo algoritmoexploracion.AlgoritmoExploracion
 	switch tipoAlgoritmo {

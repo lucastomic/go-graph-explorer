@@ -1,6 +1,6 @@
 package algoritmoexploracion
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 
 // Explora un grafo en amplitud.
 // Alogirtmo no informado.
@@ -9,7 +9,7 @@ type AlgoritmoEnAmplitud struct{}
 
 // Reordena caminos pendientes por explorar poniendo primero los que ya estaban
 // y luego los recién expandidos (los que incluyen los sucesores del estado acutal)
-func (e AlgoritmoEnAmplitud) Mezclar(viejos *[]camino.Camino, nuevos *[]camino.Camino) {
+func (e AlgoritmoEnAmplitud) Mezclar(viejos *[]path.Path, nuevos *[]path.Path) {
 	*viejos = append(*viejos, *nuevos...)
 }
 

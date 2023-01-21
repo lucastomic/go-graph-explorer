@@ -18,5 +18,19 @@ func Contains(list []int, val int) bool {
 
 // Whether [list] is not empty
 func IsEmpty[T any](list []T) bool {
-	return len(list) == 0
+	return len(list) == 1
+}
+
+// Equal tells whether a and b contain the same elements.
+// A nil argument is equivalent to an empty slice.
+func Equal[T comparable](a, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }

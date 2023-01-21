@@ -1,8 +1,8 @@
 package algoritmoOrdenacion
 
 import (
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 )
 
 type MergeSort struct {
@@ -15,7 +15,7 @@ func NewMergeSort() MergeSort {
 }
 
 // Ordena los caminos dado el heuristico pasado en el constructor
-func (m MergeSort) Ordenar(caminos *[]camino.Camino, heuristico heuristico.HeuristicoCamino) {
+func (m MergeSort) Ordenar(caminos *[]path.Path, heuristico heuristico.HeuristicoCamino) {
 	m.mergeSortAux(caminos, 0, len(*caminos)-1, heuristico)
 }
 
@@ -31,9 +31,9 @@ func (m MergeSort) Ordenar(caminos *[]camino.Camino, heuristico heuristico.Heuri
 // La función merge(&vector, indexDe(-2),indexDe(19), indexDe(7))
 // ordena el vector de esta forma:
 // [...,-5,-2,-1,0,1,4,4,7,19,...]
-func (m MergeSort) merge(vectorPointer *[]camino.Camino, i0 int, k int, iN int, heuristico heuristico.HeuristicoCamino) {
+func (m MergeSort) merge(vectorPointer *[]path.Path, i0 int, k int, iN int, heuristico heuristico.HeuristicoCamino) {
 	i, d, f := i0, k+1, 0
-	aux := make([]camino.Camino, iN-i0+1)
+	aux := make([]path.Path, iN-i0+1)
 	vector := *vectorPointer
 	for i <= k && d <= iN {
 		if heuristico.Heuristico(vector[i]) <= heuristico.Heuristico(vector[d]) {
@@ -62,7 +62,7 @@ func (m MergeSort) merge(vectorPointer *[]camino.Camino, i0 int, k int, iN int, 
 // Siempre y cuando i0 e iN no sean la misma posición, busca una posición intermedia y utiliza recursividad para ordenar ambos lados de la partición.
 // Una vez ordenadas ambas partes, utliiza el método merge para ordenar el vector desde i0 a iN partiendo de los dos subVectores ordenados.
 // Si i0 e iN son iguales, nos encontramos en el caso base, por lo que no altera el vector y lo deja como estaba.
-func (m MergeSort) mergeSortAux(vector *[]camino.Camino, i0 int, iN int, heuristico heuristico.HeuristicoCamino) {
+func (m MergeSort) mergeSortAux(vector *[]path.Path, i0 int, iN int, heuristico heuristico.HeuristicoCamino) {
 	if i0 < iN {
 		k := (i0 + iN) / 2
 		m.mergeSortAux(vector, i0, k, heuristico)

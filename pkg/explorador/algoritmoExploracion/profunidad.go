@@ -1,6 +1,6 @@
 package algoritmoexploracion
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 
 // Explora un grafo en profundidad
 type Profundidad struct {
@@ -8,7 +8,7 @@ type Profundidad struct {
 
 // Reordena caminos pendientes por explorar poniendo primero los recién expandidos (los que incluyen los
 // sucesores del estado acutal) y luego los que ya estaban
-func (e Profundidad) Mezclar(viejos *[]camino.Camino, nuevos *[]camino.Camino) {
+func (e Profundidad) Mezclar(viejos *[]path.Path, nuevos *[]path.Path) {
 	*viejos = append(*nuevos, *viejos...)
 }
 

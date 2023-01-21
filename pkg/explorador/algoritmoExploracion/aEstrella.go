@@ -2,9 +2,11 @@ package algoritmoexploracion
 
 import (
 	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 )
+
+//TODO: IMPLEMENTAR FACTOR ALPHA
 
 // El algoritmo A* es un algoritmo que se basa en la estimación del coste total que tiene el camino.
 // Esta estimación es conseguida mediante la suma del coste del camino ya conocido, y la estimacion de lo que queda
@@ -32,7 +34,7 @@ type heuristicoAEstrella struct {
 
 // Devuelve la suma entre el coste del camino ya recorrido (ya lo sabemos) y una estimaion del coste
 // de camino que faltará por recorrer (estimacion aproximada en base al heuristico pasado)
-func (h heuristicoAEstrella) Heuristico(camino camino.Camino) float64 {
+func (h heuristicoAEstrella) Heuristico(camino path.Path) float64 {
 	costeCaminoYaRecorrido := camino.GetTotalCost(h.grafo)
 	estimacionCosteFaltante := h.heuristicoEstimacion.Heuristico(camino.GetCurrentState())
 	return estimacionCosteFaltante + costeCaminoYaRecorrido

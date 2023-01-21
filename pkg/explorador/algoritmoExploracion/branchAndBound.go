@@ -2,7 +2,7 @@ package algoritmoexploracion
 
 import (
 	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 )
 
 // Heuristico que se utiliza en el algoritmo de Branch&Bound
@@ -11,7 +11,7 @@ type heuristicoBranchAndBound struct {
 }
 
 // Devuelve el coste total de un camino
-func (b heuristicoBranchAndBound) Heuristico(camino camino.Camino) float64 {
+func (b heuristicoBranchAndBound) Heuristico(camino path.Path) float64 {
 	return camino.GetTotalCost(b.grafo)
 }
 

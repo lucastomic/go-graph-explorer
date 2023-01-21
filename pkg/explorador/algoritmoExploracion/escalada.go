@@ -2,8 +2,8 @@ package algoritmoexploracion
 
 import (
 	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 )
 
 // Algoritmo de exploracion "Escalada"
@@ -30,7 +30,7 @@ func NewEscalada(
 
 // Primero ordena los nuevos algoritmos obtenidos con la expanción del estado actual, y
 // luego los concatena con los demás caminos pendientes por explorar.
-func (e Escalada) Mezclar(nuevos *[]camino.Camino, viejos *[]camino.Camino) {
+func (e Escalada) Mezclar(nuevos *[]path.Path, viejos *[]path.Path) {
 	heuristicoCamino := heuristico.NewPathHeurFromStateHeur(e.heuristico, e.grafo)
 	e.alOrdenacion.Ordenar(nuevos, heuristicoCamino)
 	*viejos = append(*viejos, *nuevos...)

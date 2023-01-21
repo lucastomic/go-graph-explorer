@@ -2,8 +2,8 @@ package algoritmoexploracion
 
 import (
 	algoritmoOrdenacion "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/algoritmosOrdenacion"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/heuristico"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 )
 
 // Algoritmo de exploración "Primero el mejor"
@@ -28,7 +28,7 @@ func NewPrimeroElMejor(
 
 // Primero se concatenan los caminos pendientes de explorar viejos con los recien expandidos
 // y luego se ordena según el heuristico y el método de ordenación
-func (p PrimeroElMejor) Mezclar(viejos *[]camino.Camino, nuevos *[]camino.Camino) {
+func (p PrimeroElMejor) Mezclar(viejos *[]path.Path, nuevos *[]path.Path) {
 	*viejos = append(*viejos, *nuevos...)
 	heuristicoCamino := heuristico.NewPathHeurFromStateHeur(p.heuristico, p.grafo)
 	p.alOrdenacion.Ordenar(viejos, heuristicoCamino)

@@ -1,10 +1,10 @@
 package heuristico
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/camino"
+import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorador/path"
 
 // Heuristico camino evalua un camino y devuelve un valor comprarble de que tan bueno es
 type HeuristicoCamino interface {
-	Heuristico(camino.Camino) float64
+	Heuristico(path.Path) float64
 }
 
 // Devuelve un heuristico de camino en base a un heuristico de estado.
@@ -24,7 +24,7 @@ type PathHeurFromStateHeur struct {
 }
 
 // Devuelve el valor del heuristico (heuristicoEstado) del estado final del camino pasado por parametro.
-func (p PathHeurFromStateHeur) Heuristico(camino camino.Camino) float64 {
+func (p PathHeurFromStateHeur) Heuristico(camino path.Path) float64 {
 	currentState := camino.GetCurrentState()
 	return p.stateHeur.Heuristico(currentState)
 }
