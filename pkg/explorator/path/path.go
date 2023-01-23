@@ -2,6 +2,7 @@ package path
 
 import (
 	"reflect"
+	"strconv"
 
 	floatutils "github.com/lucastomic/ExploracionDeEspacios/pkg/utils/floatUtils"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/utils/sliceUtils"
@@ -97,6 +98,19 @@ func (p Path) Expand(graph [][]float64) *[]Path {
 func (c Path) GetCurrentState() int {
 	states := *c.states
 	return states[len(states)-1]
+}
+
+// Converts a path to string. It shows all his states connected by an arrow.
+// For example, a path with the next states : [0,4,2,3]
+// Is returned like this "0 -> 4 -> 2 -> 3"
+func (c Path) ToString() string {
+	var s string
+	for i := 0; i < len(*c.states)-1; i++ {
+		s += strconv.Itoa((*c.states)[i])
+		s += " -> "
+	}
+	s += strconv.Itoa(c.GetCurrentState())
+	return s
 }
 
 // ComparePathsSlices check whether two paths slices have the sames paths.

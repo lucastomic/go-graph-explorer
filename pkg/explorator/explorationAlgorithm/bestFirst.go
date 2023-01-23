@@ -14,7 +14,7 @@ type BestFirst struct {
 }
 
 // Struct constructor
-func NewPrimeroElMejor(
+func NewBestFirst(
 	sortAlg sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
 	heuristic heuristic.StateHeuristic,

@@ -11,7 +11,7 @@ import (
 	testheuristics "github.com/lucastomic/ExploracionDeEspacios/test/test_heuristics"
 )
 
-var aStarTests = []struct {
+var bestFirstTests = []struct {
 	heuristic heuristic.StateHeuristic
 	olds      *[]path.Path
 	news      *[]path.Path
@@ -21,7 +21,6 @@ var aStarTests = []struct {
 		testheuristics.NewNAdjacentHeur(testGraph),
 		&[]path.Path{
 			path.NewPath(&[]int{0, 2}),
-			path.NewPath(&[]int{0, 1, 4, 3}),
 		},
 		&[]path.Path{
 			path.NewPath(&[]int{0, 1, 4}),
@@ -41,23 +40,22 @@ var aStarTests = []struct {
 		},
 		&[]path.Path{
 			path.NewPath(&[]int{0, 1, 4}),
-			path.NewPath(&[]int{0, 1, 4, 3}),
 			path.NewPath(&[]int{0, 1, 3}),
 		},
 
 		&[]path.Path{
 			path.NewPath(&[]int{0, 1, 3}),
-			path.NewPath(&[]int{0, 1, 4}),
 			path.NewPath(&[]int{0, 2}),
+			path.NewPath(&[]int{0, 1, 4}),
 		},
 	},
 }
 
-func TestAStar(t *testing.T) {
-	for i, tt := range aStarTests {
+func TestBestFirst(t *testing.T) {
+	for i, tt := range bestFirstTests {
 		testName := fmt.Sprintf("A* test number %v", i)
 		t.Run(testName, func(t *testing.T) {
-			explorationAlgorithm.NewAStar(sortAlgorithm.NewMergeSort(), testGraph, tt.heuristic).Merge(tt.olds, tt.news)
+			explorationAlgorithm.NewBestFirst(sortAlgorithm.NewMergeSort(), testGraph, tt.heuristic).Merge(tt.olds, tt.news)
 			if !path.ComparePathsSlices(*tt.olds, *tt.expected) {
 				DisplaySlicesExpectedGot(tt.expected, tt.olds, t)
 			}

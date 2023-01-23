@@ -36,7 +36,7 @@ func (m MergeSort) merge(vectorPointer *[]path.Path, i0 int, k int, iN int, heur
 	aux := make([]path.Path, iN-i0+1)
 	vector := *vectorPointer
 	for i <= k && d <= iN {
-		if heuristic.Heuristic(vector[i]) <= heuristic.Heuristic(vector[d]) {
+		if heuristic.Heuristic(vector[i]) >= heuristic.Heuristic(vector[d]) {
 			aux[f] = vector[i]
 			i++
 		} else {

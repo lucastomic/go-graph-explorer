@@ -78,7 +78,7 @@ func ExploreWithUninformed(
 	case explorationAlgorithm.AlBranchAndBonud:
 		algorithm = explorationAlgorithm.NewBranchAndBound(sortAlgorithm.NewMergeSort(), graph)
 	case explorationAlgorithm.AlDepthFirst:
-		algorithm = explorationAlgorithm.NewProfundidad()
+		algorithm = explorationAlgorithm.NewDepthFirst()
 	case explorationAlgorithm.AlAmplitude:
 		algorithm = explorationAlgorithm.NewAmplitude()
 	}
@@ -114,9 +114,9 @@ func ExploreWithInformed(
 	case explorationAlgorithm.AlAStar:
 		algorithm = explorationAlgorithm.NewAStar(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	case explorationAlgorithm.AlClimbing:
-		algorithm = explorationAlgorithm.NewEscalada(sortAlgorithm.NewMergeSort(), graph, heuristic)
+		algorithm = explorationAlgorithm.NewClimbing(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	case explorationAlgorithm.AlBestFirst:
-		algorithm = explorationAlgorithm.NewPrimeroElMejor(sortAlgorithm.NewMergeSort(), graph, heuristic)
+		algorithm = explorationAlgorithm.NewBestFirst(sortAlgorithm.NewMergeSort(), graph, heuristic)
 	}
 	explorer := explorer{
 		graph:      graph,

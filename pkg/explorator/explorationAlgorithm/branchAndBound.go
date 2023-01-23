@@ -6,12 +6,12 @@ import (
 )
 
 // Heuristic used in the Branch&Bound algorithm
-type branchAndBoundHHeuristic struct {
+type branchAndBoundHeuristic struct {
 	graph [][]float64
 }
 
 // Returns the total cost of a path
-func (b branchAndBoundHHeuristic) Heuristic(path path.Path) float64 {
+func (b branchAndBoundHeuristic) Heuristic(path path.Path) float64 {
 	return path.GetTotalCost(b.graph)
 }
 
@@ -31,7 +31,7 @@ func NewBranchAndBound(
 	return OptimalSerch{
 		sortAlgorithm: sortAlgorithm,
 		graph:         graph,
-		heuristic: branchAndBoundHHeuristic{
+		heuristic: branchAndBoundHeuristic{
 			graph: graph,
 		},
 	}

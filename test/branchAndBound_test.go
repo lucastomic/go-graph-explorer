@@ -5,20 +5,16 @@ import (
 	"testing"
 
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
-	testheuristics "github.com/lucastomic/ExploracionDeEspacios/test/test_heuristics"
 )
 
-var aStarTests = []struct {
-	heuristic heuristic.StateHeuristic
-	olds      *[]path.Path
-	news      *[]path.Path
-	expected  *[]path.Path
+var branchAndBoundTests = []struct {
+	olds     *[]path.Path
+	news     *[]path.Path
+	expected *[]path.Path
 }{
 	{
-		testheuristics.NewNAdjacentHeur(testGraph),
 		&[]path.Path{
 			path.NewPath(&[]int{0, 2}),
 			path.NewPath(&[]int{0, 1, 4, 3}),
@@ -35,29 +31,31 @@ var aStarTests = []struct {
 		},
 	},
 	{
-		testheuristics.NewDislike3Heur(),
 		&[]path.Path{
 			path.NewPath(&[]int{0, 2}),
+			path.NewPath(&[]int{0, 5}),
 		},
 		&[]path.Path{
 			path.NewPath(&[]int{0, 1, 4}),
-			path.NewPath(&[]int{0, 1, 4, 3}),
+			path.NewPath(&[]int{0, 1, 3, 4}),
 			path.NewPath(&[]int{0, 1, 3}),
 		},
 
 		&[]path.Path{
+			path.NewPath(&[]int{0, 1, 3, 4}),
 			path.NewPath(&[]int{0, 1, 3}),
-			path.NewPath(&[]int{0, 1, 4}),
 			path.NewPath(&[]int{0, 2}),
+			path.NewPath(&[]int{0, 5}),
 		},
 	},
 }
 
-func TestAStar(t *testing.T) {
-	for i, tt := range aStarTests {
-		testName := fmt.Sprintf("A* test number %v", i)
+func TestBranchAndBound(t *testing.T) {
+	for i, tt := range branchAndBoundTests {
+		testName := fmt.Sprintf("Branch&Bound test number %v", i)
 		t.Run(testName, func(t *testing.T) {
-			explorationAlgorithm.NewAStar(sortAlgorithm.NewMergeSort(), testGraph, tt.heuristic).Merge(tt.olds, tt.news)
+			bAndB := explorationAlgorithm.NewBranchAndBound(sortAlgorithm.NewMergeSort(), testGraph)
+			bAndB.Merge(tt.olds, tt.news)
 			if !path.ComparePathsSlices(*tt.olds, *tt.expected) {
 				DisplaySlicesExpectedGot(tt.expected, tt.olds, t)
 			}

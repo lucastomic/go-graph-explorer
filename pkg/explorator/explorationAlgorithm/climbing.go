@@ -13,10 +13,10 @@ type Climbing struct {
 	graph     [][]float64
 }
 
-// Constructor of the "Escalation" scanning algorithm.
+// Constructor of the "Climbing" scanning algorithm.
 // heuristic is the state heuristic by which the algorithm evaluates the states to make expansion decisions.
 // alSort is the sort algorithm by which "escalation" sorts the paths once they are evaluated with the heuristic
-func NewEscalada(
+func NewClimbing(
 	sortAlg sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
 	heuristic heuristic.StateHeuristic,
@@ -30,7 +30,7 @@ func NewEscalada(
 
 // First sorts the new algorithms obtained by expanding the current state, and
 // then concatenates them with the remaining paths to be explored.
-func (e Climbing) Merge(news *[]path.Path, olds *[]path.Path) {
+func (e Climbing) Merge(olds *[]path.Path, news *[]path.Path) {
 	pathHeuristic := heuristic.NewPathHeurFromStateHeur(e.heuristic, e.graph)
 	e.sortAlg.Sort(news, pathHeuristic)
 	*olds = append(*olds, *news...)
