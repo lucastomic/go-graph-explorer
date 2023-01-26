@@ -89,3 +89,7 @@ res2, _ := explorer.ExploreWithUninformed(testGraph, ThreeSolution{}, 5, uninfor
 fmt.Println(res2.ToString())
 ```
 
+Output:
+```
+5 -> 0 -> 1 -> 3
+```
