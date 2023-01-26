@@ -27,6 +27,16 @@ import (
 
 Define the graph we want to explore:
 
+```mermaid
+graph TD;
+    5--0;
+    0--2;
+    0--1;
+    1--2;
+    1--3;
+    4--3;
+```
+
 ```go
 // (5)───0.5──(0)────0.5──(1)───5────┐
 //             │           │         │
