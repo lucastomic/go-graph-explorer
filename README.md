@@ -9,7 +9,7 @@ go-graph-explorer is a library for graph exploration. Currently support salgorit
     -BestFirst
 
 ## Install
-```
+```go
     go get -u github.com/lucastomic/go-graph-explore
 ```
 
@@ -17,7 +17,7 @@ go-graph-explorer is a library for graph exploration. Currently support salgorit
  
 Import the go-graph-explorer package 
 
-```
+```go
 import (
     "github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
     "github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
@@ -27,7 +27,7 @@ import (
 
 Define the graph we want to explore:
 
-```
+```go
 // (5)───0.5──(0)────0.5──(1)───5────┐
 //             │           │         │
 //             │           │        (4)
@@ -49,7 +49,7 @@ var testGraph [][]float64 = [][]float64{
 ```
 
 Define our heuristic
-```
+```go
 // Heuristic which dislikes 1
 type Dislike1Heur struct{}
 func (h Dislike1Heur) Heuristic(state int) float64 {
@@ -62,7 +62,7 @@ func (h Dislike1Heur) Heuristic(state int) float64 {
 ```
 
 Define the solution condition
-```
+```go
 type ThreeSolution struct {
 }
 
@@ -73,19 +73,19 @@ func (s ThreeSolution) IsSolution(state int, graph [][]float64) bool {
 ```
 and finally explore the graph. We can do it with an informed algorithm
 
-```
-	res, _ := explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.AStar)
-	// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.Climbing)
-	// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.BestFirst)
-	fmt.Println(res.ToString())
+```go
+res, _ := explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.AStar)
+// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.Climbing)
+// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.BestFirst)
+fmt.Println(res.ToString())
 ```
 
 or with a uninformed one
 
-```
-	res2, _ := explorer.ExploreWithUninformed(testGraph, ThreeSolution{}, 5, uninformedAlgorithm.Amplitude)
-	// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.DepthFirst)
-	// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.BranchAndBonud)
-	fmt.Println(res2.ToString())
+```go
+res2, _ := explorer.ExploreWithUninformed(testGraph, ThreeSolution{}, 5, uninformedAlgorithm.Amplitude)
+// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.DepthFirst)
+// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.BranchAndBonud)
+fmt.Println(res2.ToString())
 ```
 
