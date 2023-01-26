@@ -25,6 +25,11 @@ func NewEmptyPath() Path {
 	return Path{states: states}
 }
 
+// Get the a slice with the states of the path
+func (p Path) GetStates() []int {
+	return *p.states
+}
+
 // Returns the total cost of the path
 //For example, given the next graph:
 

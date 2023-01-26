@@ -1,33 +1,14 @@
-# go-graph-explorer
+package examples
 
-go-graph-explorer is a library for graph exploration. Currently support salgorithms:
-    -A*
-    -BranchAndBonud
-    -DepthFirst
-    -Climbing 
-    -Amplitude
-    -BestFirst
-
-##Install
-```
-    go get -u github.com/lucastomic/go-graph-explore
-```
-
-##Usage
- 
-Import the go-graph-explorer package 
-
-```
 import (
-    "github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
-    "github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
-    "github.com/lucastomic/go-graph-explorer/pkg/explorator/explorer"
+	"fmt"
+	"math"
+
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorer"
 )
-```
 
-Define the graph we want to explore:
-
-```
 // (5)───0.5──(0)────0.5──(1)───5────┐
 //             │           │         │
 //             │           │        (4)
@@ -46,12 +27,11 @@ var testGraph [][]float64 = [][]float64{
 	{maxF, 5, maxF, 2, maxF, maxF},
 	{0.5, maxF, maxF, maxF, maxF, maxF},
 }
-```
 
-Define our heuristic
-```
-// Heuristic which dislikes 1
+// Heuristic which dislikes 3
 type Dislike1Heur struct{}
+
+// Rerturns 10 if the state == 1, returns 1 otherwise
 func (h Dislike1Heur) Heuristic(state int) float64 {
 	if state == 1 {
 		return 10
@@ -59,10 +39,8 @@ func (h Dislike1Heur) Heuristic(state int) float64 {
 		return 1
 	}
 }
-```
 
-Define the solution condition
-```
+// This solution is true when the sate is three
 type ThreeSolution struct {
 }
 
@@ -70,22 +48,15 @@ type ThreeSolution struct {
 func (s ThreeSolution) IsSolution(state int, graph [][]float64) bool {
 	return state == 3
 }
-```
-and finally explore the graph. We can do it with an informed algorithm
 
-```
+func main() {
 	res, _ := explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.AStar)
 	// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.Climbing)
 	// explorer.ExploreWithInformed(testGraph, ThreeSolution{}, Dislike1Heur{}, 5, informedAlgorithm.BestFirst)
 	fmt.Println(res.ToString())
-```
 
-or with a uninformed one
-
-```
 	res2, _ := explorer.ExploreWithUninformed(testGraph, ThreeSolution{}, 5, uninformedAlgorithm.Amplitude)
 	// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.DepthFirst)
 	// explorer.ExploreWithUninformed(testGraph,ThreeSolution{},5,uninformedAlgorithm.BranchAndBonud)
 	fmt.Println(res2.ToString())
-```
-
+}
