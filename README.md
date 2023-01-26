@@ -67,7 +67,6 @@ Define the solution condition
 type ThreeSolution struct {
 }
 
-// Returns true if the state is 3
 func (s ThreeSolution) IsSolution(state int, graph [][]float64) bool {
 	return state == 3
 }
