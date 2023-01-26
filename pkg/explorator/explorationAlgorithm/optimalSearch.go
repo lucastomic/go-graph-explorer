@@ -8,7 +8,7 @@ import (
 )
 
 // They are algorithms that guarantee to obtain the optimal path
-type OptimalSerch struct {
+type optimalSerch struct {
 	sortAlgorithm sortAlgorithm.SortAlgorithm
 	heuristic     heuristic.PathHeuristic
 	graph         [][]float64
@@ -17,7 +17,7 @@ type OptimalSerch struct {
 // It concatenates the old paths with the new ones.
 // Then prune them and finally sort all his elemnets.
 // It sorts them by cost.
-func (b OptimalSerch) Merge(olds *[]path.Path, news *[]path.Path) {
+func (b optimalSerch) Merge(olds *[]path.Path, news *[]path.Path) {
 	*olds = append(*olds, *news...)
 	prune.Prune(olds, b.graph)
 	b.sortAlgorithm.Sort(olds, b.heuristic)

@@ -27,8 +27,8 @@ func (b branchAndBoundHeuristic) Heuristic(path path.Path) float64 {
 func NewBranchAndBound(
 	sortAlgorithm sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
-) OptimalSerch {
-	return OptimalSerch{
+) optimalSerch {
+	return optimalSerch{
 		sortAlgorithm: sortAlgorithm,
 		graph:         graph,
 		heuristic: branchAndBoundHeuristic{

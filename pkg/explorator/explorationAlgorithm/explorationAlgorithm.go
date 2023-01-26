@@ -10,15 +10,3 @@ import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 type ExplorationAlgorithm interface {
 	Merge(*[]path.Path, *[]path.Path)
 }
-
-// These are the different types of algorithm that there are:
-type ExpAlgorithmType int
-
-const (
-	AlBranchAndBonud = iota
-	AlAStar
-	AlClimbing
-	AlBestFirst
-	AlDepthFirst
-	AlAmplitude
-)

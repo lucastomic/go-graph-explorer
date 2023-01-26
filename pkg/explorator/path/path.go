@@ -15,8 +15,8 @@ type Path struct {
 }
 
 // Returns a path with the states specified by argument
-func NewPath(estados *[]int) Path {
-	return Path{states: estados}
+func NewPath(states *[]int) Path {
+	return Path{states: states}
 }
 
 // Returns a empty path
@@ -57,8 +57,11 @@ func (c Path) GetTotalCost(graph [][]float64) float64 {
 // [0,4,3,9,6]
 // getPathWithNewState(5) would return a different path with the next states:
 // [0,4,3,9,6,5]
+// It copies the path's state in another slice to don't modify the path's state with the append() method.
 func (c Path) getPathWithNewState(newState int) Path {
-	states := append(*c.states, newState)
+	var states []int = make([]int, len(*c.states))
+	copy(states, *c.states)
+	states = append(states, newState)
 	return NewPath(&states)
 }
 
@@ -79,19 +82,25 @@ func (c Path) getPathWithNewState(newState int) Path {
 // the result of expanding this path wold be:
 // [ [5,0,1,4], [5,0,1,3] ]
 func (p Path) Expand(graph [][]float64) *[]Path {
-	var res []Path
-	state := *p.states
-	currentState := state[len(state)-1]
-	adjacentOfCurrentState := graph[currentState]
+	var res []Path = make([]Path, 0)
+	adjacentOfCurrentState := graph[p.GetCurrentState()]
 
 	// For each state adjacent to the current one (the last one in the list) that is not in the path,
 	// add a path to the response with path+state adjacent
 	for i := range adjacentOfCurrentState {
-		if floatutils.NotInfinit(adjacentOfCurrentState[i]) && !sliceUtils.Contains(*p.states, i) {
+		if p.isValid(adjacentOfCurrentState, i) {
 			res = append(res, p.getPathWithNewState(i))
 		}
 	}
 	return &res
+}
+
+// isValid cheks if the state passed as an argument is connected and is not in path yet, according
+// to the vector of adjacent states
+func (p Path) isValid(adjacentOfCurrentState []float64, state int) bool {
+	isConnected := floatutils.NotInfinit(adjacentOfCurrentState[state])
+	isInPath := sliceUtils.Contains(*p.states, state)
+	return isConnected && !isInPath
 }
 
 // Return the last state of the path (the current state)
@@ -111,6 +120,16 @@ func (c Path) ToString() string {
 	}
 	s += strconv.Itoa(c.GetCurrentState())
 	return s
+}
+
+// Compare if this paht is equal to another slice. It doesn't compare
+// if it's the same object, it compares if it has the same paht.
+func (p Path) Equal(otherPath Path) bool {
+	otherStates := otherPath.states
+	if !reflect.DeepEqual(otherStates, p.states) {
+		return false
+	}
+	return true
 }
 
 // ComparePathsSlices check whether two paths slices have the sames paths.

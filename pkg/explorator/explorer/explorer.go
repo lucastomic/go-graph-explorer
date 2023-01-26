@@ -4,6 +4,9 @@ import (
 	"errors"
 
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
+	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
+
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
 	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
@@ -18,10 +21,10 @@ import (
 // defines how the pending paths to be explored will be ordered once the current state is extended.
 // The solution state is measured with the isSolution() method of the Solution structure
 type explorer struct {
-	graph      [][]float64
-	algorithm  explorationAlgorithm.ExplorationAlgorithm
-	solution   solution.Solution
-	startState int
+	graph       [][]float64
+	algorithm   explorationAlgorithm.ExplorationAlgorithm
+	solution    solution.Solution
+	initalState int
 }
 
 // Indicates whether the explorer should keep looking for an optimal path.
@@ -31,21 +34,21 @@ func (e explorer) keepSearching(pendingPaths []path.Path, currentPath path.Path)
 	return !sliceUtils.IsEmpty(pendingPaths) && !e.solution.IsSolution(currentPath.GetCurrentState(), e.graph)
 }
 
-// Explore the graph obtaining the searched path.
+// explore the graph obtaining the searched path.
 // To do this, create a list of pending paths, starting with the first node according to the adjacency matrix.
 // Then, in each iteration, replace the last path with what is returned by the [e.expand()] method and
 // reorders the paths depending on the [shuffle()] method of the scan algorithm passed by argument.
 // Iterate until the method [e.seguirBuscando()] returns false
 // If all the iterations are finished and the current state is not the solution, return an error indicating that the problem has no solution.
 // Otherwise, return the current state.
-func (e explorer) Explore() (path.Path, error) {
-	var pendingPaths []path.Path
-	pendingPaths[0] = path.NewPath(&[]int{e.startState})
+func (e explorer) explore() (path.Path, error) {
+	var pendingPaths []path.Path = make([]path.Path, 0)
+	pendingPaths = append(pendingPaths, path.NewPath(&[]int{e.initalState}))
 	currentPath := pendingPaths[len(pendingPaths)-1]
 
 	for e.keepSearching(pendingPaths, currentPath) {
 		newPaths := currentPath.Expand(e.graph)
-		sliceUtils.RemoveLast(newPaths)
+		sliceUtils.RemoveLast(&pendingPaths)
 
 		e.algorithm.Merge(&pendingPaths, newPaths)
 		currentPath = pendingPaths[len(pendingPaths)-1]
@@ -63,32 +66,34 @@ func (e explorer) Explore() (path.Path, error) {
 // solution must be a struct that implements the method IsSolution(int, [][]float64) and will indicate when a state is a solution to the problem
 // algorithmType is the scan algorithm to use. Your options are:
 //
-// algoritmoexploracion.AlBranchAndBonud (Branch&Bound)
-// algoritmoexploracion.AlDepthFirst(Depth)
-// algoritmoexploracion.AlAmplitude (Amplitude)
+// uninformedAlgorithm.BranchAndBonud (Branch&Bound)
+// uninformedAlgorithm.DepthFirst(Depth)
+// uninformedAlgorithm.Amplitude (Amplitude)
 func ExploreWithUninformed(
 	graph [][]float64,
 	solution solution.Solution,
-	startState int,
-	algorithmType explorationAlgorithm.ExpAlgorithmType,
+	initialState int,
+	algorithmType uninformedAlgorithm.UniformedExpAlgorithmType,
 ) (path.Path, error) {
-
 	var algorithm explorationAlgorithm.ExplorationAlgorithm
 	switch algorithmType {
-	case explorationAlgorithm.AlBranchAndBonud:
+	case uninformedAlgorithm.BranchAndBonud:
 		algorithm = explorationAlgorithm.NewBranchAndBound(sortAlgorithm.NewMergeSort(), graph)
-	case explorationAlgorithm.AlDepthFirst:
+	case uninformedAlgorithm.DepthFirst:
 		algorithm = explorationAlgorithm.NewDepthFirst()
-	case explorationAlgorithm.AlAmplitude:
+	case uninformedAlgorithm.Amplitude:
 		algorithm = explorationAlgorithm.NewAmplitude()
+	default:
+		return path.NewEmptyPath(), errors.New("this algotirhm is not uninformed. Use ExploreWithInformed()")
+
 	}
 	explorer := explorer{
-		graph:      graph,
-		solution:   solution,
-		algorithm:  algorithm,
-		startState: startState,
+		graph:       graph,
+		solution:    solution,
+		algorithm:   algorithm,
+		initalState: initialState,
 	}
-	return explorer.Explore()
+	return explorer.explore()
 }
 
 // Explore a graph with an informed algorithm until it finds a solution state.
@@ -98,31 +103,32 @@ func ExploreWithUninformed(
 // quantitative of how good that state is in terms of the solution
 // algorithmType is the scan algorithm to use. Your options are:
 //
-//	algoritmoexploracion.AlAStar (A*)
-//	algoritmoexploracion.AlClimbing (Climbing)
-//	algoritmoexploracion.AlBestFirst (Best First)
+//	informedAlgorithm.AlAStar (A*)
+//	informedAlgorithm.AlClimbing (Climbing)
+//	informedAlgorithm.AlBestFirst (Best First)
 func ExploreWithInformed(
 	graph [][]float64,
 	solution solution.Solution,
 	heuristic heuristic.StateHeuristic,
-	startState int,
-	algorithmType explorationAlgorithm.ExpAlgorithmType,
+	initalState int,
+	algorithmType informedAlgorithm.InformedExpAlgorithmType,
 ) (path.Path, error) {
-
 	var algorithm explorationAlgorithm.ExplorationAlgorithm
 	switch algorithmType {
-	case explorationAlgorithm.AlAStar:
+	case informedAlgorithm.AStar:
 		algorithm = explorationAlgorithm.NewAStar(sortAlgorithm.NewMergeSort(), graph, heuristic)
-	case explorationAlgorithm.AlClimbing:
+	case informedAlgorithm.Climbing:
 		algorithm = explorationAlgorithm.NewClimbing(sortAlgorithm.NewMergeSort(), graph, heuristic)
-	case explorationAlgorithm.AlBestFirst:
+	case informedAlgorithm.BestFirst:
 		algorithm = explorationAlgorithm.NewBestFirst(sortAlgorithm.NewMergeSort(), graph, heuristic)
+	default:
+		return path.NewEmptyPath(), errors.New("this algotirhm is not informed. Use ExploreWithUninformed()")
 	}
 	explorer := explorer{
-		graph:      graph,
-		solution:   solution,
-		algorithm:  algorithm,
-		startState: startState,
+		graph:       graph,
+		solution:    solution,
+		algorithm:   algorithm,
+		initalState: initalState,
 	}
-	return explorer.Explore()
+	return explorer.explore()
 }

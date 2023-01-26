@@ -15,8 +15,8 @@ func NewAStar(
 	sortAlgorithm sortAlgorithm.SortAlgorithm,
 	graph [][]float64,
 	heuristic heuristic.StateHeuristic,
-) OptimalSerch {
-	return OptimalSerch{
+) optimalSerch {
+	return optimalSerch{
 		sortAlgorithm: sortAlgorithm,
 		graph:         graph,
 		heuristic: AStarHeuristic{
