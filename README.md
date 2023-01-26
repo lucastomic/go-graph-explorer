@@ -13,7 +13,7 @@ Currently support the next algorithms:
 
 ## Install
 ```
-    go get -u github.com/lucastomic/go-graph-explore
+go get -u github.com/lucastomic/go-graph-explore
 ```
 
 ## Usage
