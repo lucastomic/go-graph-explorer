@@ -2,17 +2,12 @@
 
 go-graph-explorer is a library for graph exploration. Currently support algorithms:
 
-    - A
-
-    * BranchAndBonud
-
-    + DepthFirst
-
-    - Climbing 
-
-    * Amplitude
-    
-    + BestFirst
+- A*
+* BranchAndBonud
++ DepthFirst
+- Climbing 
+* Amplitude
++ BestFirst
 
 ## Install
 ```go
