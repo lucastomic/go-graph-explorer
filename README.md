@@ -12,7 +12,7 @@ Currently support the next algorithms:
 + BestFirst
 
 ## Install
-```go
+```
     go get -u github.com/lucastomic/go-graph-explore
 ```
 
