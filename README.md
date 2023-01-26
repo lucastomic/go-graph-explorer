@@ -8,12 +8,12 @@ go-graph-explorer is a library for graph exploration. Currently support salgorit
     -Amplitude
     -BestFirst
 
-##Install
+## Install
 ```
     go get -u github.com/lucastomic/go-graph-explore
 ```
 
-##Usage
+## Usage
  
 Import the go-graph-explorer package 
 
