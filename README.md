@@ -2,12 +2,12 @@
 
 go-graph-explorer is a library for graph exploration. Currently support salgorithms:
 
-    * A*
+    - A*
     * BranchAndBonud
-    * DepthFirst
-    * Climbing 
+    + DepthFirst
+    - Climbing 
     * Amplitude
-    * BestFirst
+    + BestFirst
 
 ## Install
 ```go
