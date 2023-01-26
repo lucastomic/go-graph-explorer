@@ -1,6 +1,6 @@
 package heuristic
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+import "github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 
 // Heuristic path evaluates a path and returns a comparable value of how good it is
 type PathHeuristic interface {

@@ -1,6 +1,6 @@
 package explorationAlgorithm
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+import "github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 
 // Interface that covers the various system-dependent aspects of an exploration problem.
 // This is defined by:

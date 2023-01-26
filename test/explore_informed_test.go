@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorer"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
-	solutiontests "github.com/lucastomic/ExploracionDeEspacios/test/solution_tests"
-	testheuristics "github.com/lucastomic/ExploracionDeEspacios/test/test_heuristics"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorer"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/heuristic"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/solution"
+	solutiontests "github.com/lucastomic/go-graph-explorer/test/solution_tests"
+	testheuristics "github.com/lucastomic/go-graph-explorer/test/test_heuristics"
 )
 
 var exploreWithInformedTests = []struct {

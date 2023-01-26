@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 )
 
 var depthFirstTests = []struct {

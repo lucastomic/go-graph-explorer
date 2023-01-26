@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 )
 
 // (5)───0.5──(0)────0.5──(1)───5────┐

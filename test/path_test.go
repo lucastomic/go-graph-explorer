@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 )
 
 var totalCostTests = []struct {

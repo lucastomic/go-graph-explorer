@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorer"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
-	solutiontests "github.com/lucastomic/ExploracionDeEspacios/test/solution_tests"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorer"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/solution"
+	solutiontests "github.com/lucastomic/go-graph-explorer/test/solution_tests"
 )
 
 var exploreWithUninformedTests = []struct {

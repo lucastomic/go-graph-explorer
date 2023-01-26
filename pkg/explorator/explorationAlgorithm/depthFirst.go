@@ -1,6 +1,6 @@
 package explorationAlgorithm
 
-import "github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+import "github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 
 // "DepthFirst" exploration algorithm
 type DepthFirst struct {

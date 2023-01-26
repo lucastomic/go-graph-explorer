@@ -1,10 +1,10 @@
 package explorationAlgorithm
 
 import (
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/prune"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/heuristic"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/prune"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/sortAlgorithm"
 )
 
 // They are algorithms that guarantee to obtain the optimal path

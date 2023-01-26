@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/prune"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/prune"
 )
 
 // Differents paths

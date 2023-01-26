@@ -1,6 +1,6 @@
 package testheuristics
 
-import floatutils "github.com/lucastomic/ExploracionDeEspacios/pkg/utils/floatUtils"
+import floatutils "github.com/lucastomic/go-graph-explorer/pkg/utils/floatUtils"
 
 // Heuristic which returns the number of adjacents
 type NAdjacentsHeur struct{ testGraph [][]float64 }

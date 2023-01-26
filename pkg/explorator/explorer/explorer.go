@@ -3,15 +3,15 @@ package explorer
 import (
 	"errors"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/informedAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm/enums/uninformedAlgorithm"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/solution"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/utils/sliceUtils"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/heuristic"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/solution"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/sortAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/utils/sliceUtils"
 )
 
 // explorer is a structure in charge of exploring a graph.

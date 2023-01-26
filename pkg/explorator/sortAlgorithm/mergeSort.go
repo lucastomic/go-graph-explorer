@@ -1,8 +1,8 @@
 package sortAlgorithm
 
 import (
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/heuristic"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
 )
 
 type MergeSort struct {

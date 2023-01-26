@@ -1,8 +1,8 @@
 package explorationAlgorithm
 
 import (
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/sortAlgorithm"
 )
 
 // Heuristic used in the Branch&Bound algorithm

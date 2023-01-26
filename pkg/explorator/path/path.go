@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"strconv"
 
-	floatutils "github.com/lucastomic/ExploracionDeEspacios/pkg/utils/floatUtils"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/utils/sliceUtils"
+	floatutils "github.com/lucastomic/go-graph-explorer/pkg/utils/floatUtils"
+	"github.com/lucastomic/go-graph-explorer/pkg/utils/sliceUtils"
 )
 
 // A path is an acyclic succession of states. These states are represented

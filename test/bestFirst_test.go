@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/explorationAlgorithm"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/heuristic"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/path"
-	"github.com/lucastomic/ExploracionDeEspacios/pkg/explorator/sortAlgorithm"
-	testheuristics "github.com/lucastomic/ExploracionDeEspacios/test/test_heuristics"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/explorationAlgorithm"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/heuristic"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/path"
+	"github.com/lucastomic/go-graph-explorer/pkg/explorator/sortAlgorithm"
+	testheuristics "github.com/lucastomic/go-graph-explorer/test/test_heuristics"
 )
 
 var bestFirstTests = []struct {
